@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Bitácora · Rafa</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bitácora">
+<meta name="theme-color" content="#101728">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23101728'/%3E%3Ccircle cx='90' cy='90' r='46' fill='none' stroke='%23FF8A5B' stroke-width='12' stroke-linecap='round' stroke-dasharray='210 300' transform='rotate(-90 90 90)'/%3E%3Ccircle cx='90' cy='90' r='46' fill='none' stroke='%237FD8B0' stroke-width='12' stroke-linecap='round' stroke-dasharray='60 300' transform='rotate(130 90 90)'/%3E%3C/svg%3E">
+<style>
+:root{
+  --tinta:#101728;        
+  --tinta-2:#182136;      
+  --tinta-3:#212C45;      
+  --linea:#2C3A57;
+  --marfil:#EFE9DF;
+  --humo:#95A3BE;
+  --albaricoque:#FF8A5B;  
+  --menta:#7FD8B0;        
+  --rosa:#E56A7E;         
+  --oro:#E8C468;          
+  --r:16px;
+  --sans:'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--tinta);color:var(--marfil);font-family:var(--sans);
+  font-size:16px;line-height:1.45;overscroll-behavior-y:none;
+  padding-bottom:calc(78px + env(safe-area-inset-bottom));
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font-family:inherit;font-size:16px;color:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:var(--albaricoque)}
+.wrap{max-width:620px;margin:0 auto;padding:0 16px}
+
+/* ---------- cabecera ---------- */
+header{padding:calc(env(safe-area-inset-top) + 14px) 0 6px}
+.fecha{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--humo)}
+.saludo{font-family:var(--sans);font-size:27px;line-height:1.15;margin:6px 0 0;font-style:italic;font-weight:600;}
+.saludo b{font-style:normal;color:var(--albaricoque);font-weight:800;}
+
+/* ---------- anillo firma ---------- */
+.anillo-zona{display:flex;align-items:center;gap:16px;margin:16px 0 6px;
+  background:linear-gradient(180deg,var(--tinta-2),rgba(24,33,54,.4));
+  border:1px solid var(--linea);border-radius:22px;padding:14px}
+.anillo{width:118px;height:118px;flex:0 0 118px;position:relative}
+.anillo svg{width:100%;height:100%;transform:rotate(0deg)}
+.anillo .centro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.anillo .pct{font-size:26px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.anillo .pct span{font-size:13px;font-weight:600;color:var(--humo)}
+.anillo .lbl{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--humo)}
+.leyenda{display:grid;gap:7px;flex:1}
+.leyenda div{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--humo); font-weight: 400;}
+.punto{width:9px;height:9px;border-radius:50%;flex:0 0 9px}
+.leyenda b{color:var(--marfil);font-weight:600}
+
+/* ---------- estructura ---------- */
+.vista{display:none;animation:sube .28s ease}
+.vista.on{display:block}
+@keyframes sube{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.titulo{display:flex;align-items:baseline;justify-content:space-between;margin:22px 0 10px}
+.titulo h2{font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin:0;color:var(--humo);font-weight:700}
+.titulo em{font-style:normal;font-size:12px;color:var(--humo)}
+
+.card{background:var(--tinta-2);border:1px solid var(--linea);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.card.plano{background:transparent}
+.fila{display:flex;align-items:center;gap:10px}
+.crece{flex:1;min-width:0}
+.mini{font-size:12px;color:var(--humo)}
+.truncar{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+input,select,textarea{
+  background:var(--tinta-3);border:1px solid var(--linea);border-radius:11px;
+  padding:11px 12px;width:100%;outline:none;color:var(--marfil)
+}
+input:focus,textarea:focus,select:focus{border-color:var(--albaricoque)}
+textarea{resize:vertical;min-height:110px;line-height:1.5}
+label.campo{display:block;margin-bottom:9px}
+label.campo span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--humo);margin-bottom:5px;font-weight:600;}
+
+.btn{background:var(--albaricoque);color:#20130C;font-weight:700;border-radius:12px;padding:12px 16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%}
+.btn:active{transform:scale(.985)}
+.btn.fantasma{background:transparent;border:1px solid var(--linea);color:var(--marfil);font-weight:600}
+.btn.chico{width:auto;padding:8px 12px;font-size:13px;border-radius:10px}
+.btn.peligro{background:transparent;border:1px solid var(--rosa);color:var(--rosa)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--tinta-3);border:1px solid var(--linea);
+  border-radius:999px;padding:7px 12px;font-size:13px;color:var(--humo); font-weight: 600;}
+.chip.on{background:var(--albaricoque);color:#20130C;border-color:var(--albaricoque);font-weight:700}
+.chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+
+.vacio{text-align:center;padding:26px 14px;color:var(--humo);font-style:italic;font-size:14px;
+  border:1px dashed var(--linea);border-radius:var(--r)}
+
+/* items con check */
+.item{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--linea)}
+.item:last-child{border-bottom:none}
+.tick{width:23px;height:23px;flex:0 0 23px;border-radius:7px;border:1.5px solid var(--linea);margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent}
+.tick.on{background:var(--menta);border-color:var(--menta);color:#0C2119}
+.item.listo .txt{text-decoration:line-through;color:var(--humo)}
+.borrar{color:var(--humo);font-size:19px;padding:0 4px;opacity:.55}
+
+/* barra progreso deudas */
+.barra-bg { background: var(--tinta-3); border-radius: 999px; height: 8px; margin-top: 10px; overflow: hidden; border: 1px solid var(--linea); }
+.barra-in { background: var(--menta); height: 100%; transition: width 0.5s ease; border-radius: 999px;}
+
+/* ---------- entreno ---------- */
+.ej{border:1px solid var(--linea);border-radius:14px;padding:12px;margin-bottom:9px;background:var(--tinta-2)}
+.ej h4{margin:0;font-size:15.5px;font-weight:700;letter-spacing:-.01em}
+.ej .hist{font-size:11.5px;color:var(--oro);margin-top:2px}
+.series{display:grid;gap:6px;margin-top:10px}
+.serie{display:grid;grid-template-columns:24px 1fr 1fr 40px;gap:6px;align-items:center}
+.serie .n{font-size:11px;color:var(--humo);text-align:center;font-variant-numeric:tabular-nums}
+.serie input{padding:9px 8px;text-align:center;font-variant-numeric:tabular-nums;font-size:15px}
+.serie .tick{margin:0 auto}
+.crono{position:sticky;bottom:calc(84px + env(safe-area-inset-bottom));z-index:20;
+  background:var(--tinta-3);border:1px solid var(--albaricoque);border-radius:14px;padding:11px 14px;
+  display:flex;align-items:center;gap:12px;margin:12px 0}
+.crono .t{font-size:27px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;min-width:82px}
+
+/* ---------- números grandes ---------- */
+.cifra{font-size:31px;font-weight:800;letter-spacing:-.035em;font-variant-numeric:tabular-nums;line-height:1.05}
+.cifra.verde{color:var(--menta)} .cifra.roja{color:var(--rosa)}
+.kpi{background:var(--tinta-2);border:1px solid var(--linea);border-radius:14px;padding:12px}
+.kpi .k{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--humo);margin-bottom:5px;font-weight:700;}
+
+/* ---------- barra inferior ---------- */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:60;
+  background:rgba(16,23,40,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-top:1px solid var(--linea);padding-bottom:env(safe-area-inset-bottom)}
+nav .in{max-width:620px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav button{padding:9px 0 8px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--humo)}
+nav button.on{color:var(--albaricoque)}
+nav svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+nav span{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+
+/* modal */
+.velo{position:fixed;inset:0;background:rgba(8,12,22,.72);z-index:100;display:none;align-items:flex-end}
+.velo.on{display:flex}
+.hoja{background:var(--tinta-2);border-top-left-radius:24px;border-top-right-radius:24px;
+  width:100%;max-height:88vh;overflow:auto;padding:18px 16px calc(26px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--linea);animation:sube .22s ease}
+.hoja h3{margin:2px 0 14px;font-size:19px;letter-spacing:-.01em;font-weight:700;}
+.asa{width:38px;height:4px;background:var(--linea);border-radius:2px;margin:0 auto 12px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));
+  background:var(--marfil);color:var(--tinta);padding:10px 16px;border-radius:999px;font-size:13.5px;font-weight:700;
+  z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.on{opacity:1}
+.receta-pasos{font-size:14px;line-height:1.6;color:#DCD5C9}
+hr{border:none;border-top:1px solid var(--linea);margin:16px 0}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="fecha" id="fechaLarga">—</div>
+    <h1 class="saludo" id="saludo">Hola, <b>Rafa</b></h1>
+  </header>
+
+  <div class="anillo-zona">
+    <div class="anillo">
+      <svg viewBox="0 0 130 130" id="anilloSvg"></svg>
+      <div class="centro">
+        <div class="pct" id="anilloPct">0<span>%</span></div>
+        <div class="lbl">del día</div>
+      </div>
+    </div>
+    <div class="leyenda" id="leyenda"></div>
+  </div>
+
+  <!-- ============ HOY ============ -->
+  <section class="vista on" id="v-hoy">
+    <div class="titulo"><h2>Descarga de la mañana</h2><em id="hoyResumen"></em></div>
+    <div class="card">
+      <textarea id="dump" placeholder="Escribe todo de corrido, como te salga:&#10;&#10;reunión del portal a las 10am&#10;responder correo a cliente&#10;pagar seguro&#10;cita odontólogo 3:30 pm"></textarea>
+      <div class="grid2" style="margin-top:9px">
+        <button class="btn fantasma" onclick="limpiarDump()">Borrar</button>
+        <button class="btn" onclick="procesarDump()">Ordenar mi día</button>
+      </div>
+      <div class="mini" style="margin-top:8px">Separo citas (si detecto una hora), correos (si dices correo, mail o escribir a) y el resto queda como tarea.</div>
+    </div>
+
+    <div id="pendientesAyer"></div>
+
+    <div class="titulo"><h2>Citas</h2><button class="btn chico fantasma" onclick="agregarManual('citas')">+ Añadir</button></div>
+    <div class="card" id="listaCitas"></div>
+
+    <div class="titulo"><h2>Correos por responder</h2><button class="btn chico fantasma" onclick="agregarManual('correos')">+ Añadir</button></div>
+    <div class="card" id="listaCorreos"></div>
+
+    <div class="titulo"><h2>Tareas</h2><button class="btn chico fantasma" onclick="agregarManual('tareas')">+ Añadir</button></div>
+    <div class="card" id="listaTareas"></div>
+
+    <div class="titulo"><h2>Lo que viene</h2></div>
+    <div class="card" id="proximo"></div>
+  </section>
+
+  <!-- ============ ENTRENO ============ -->
+  <section class="vista" id="v-entreno">
+    <div class="titulo"><h2>Semana</h2><em id="rachaTxt"></em></div>
+    <div class="chips" id="chipsRutinas"></div>
+    <div id="entrenoCuerpo"></div>
+  </section>
+
+  <!-- ============ COMIDA ============ -->
+  <section class="vista" id="v-comida">
+    <div class="titulo"><h2>Comida</h2><em id="comidaFecha"></em></div>
+    <div class="chips" id="chipsDias"></div>
+    <div id="comidaCuerpo"></div>
+    <div class="titulo"><h2>Recetario</h2><button class="btn chico fantasma" onclick="nuevaReceta()">+ Receta</button></div>
+    <div id="listaRecetas"></div>
+    <button class="btn fantasma" style="margin-top:6px" onclick="listaMercado()">Armar lista de mercado</button>
+  </section>
+
+  <!-- ============ PLATA ============ -->
+  <section class="vista" id="v-plata">
+    <div class="titulo"><h2 id="plataMes">Mes</h2><em id="plataNav"></em></div>
+    <div class="grid3" style="margin-bottom:10px">
+      <div class="kpi"><div class="k">Entró</div><div class="cifra verde" id="kIn" style="font-size:19px">—</div></div>
+      <div class="kpi"><div class="k">Salió</div><div class="cifra roja" id="kOut" style="font-size:19px">—</div></div>
+      <div class="kpi"><div class="k">Queda</div><div class="cifra" id="kBal" style="font-size:19px">—</div></div>
+    </div>
+    <div class="grid2">
+      <button class="btn" onclick="nuevoMov('gasto')">− Gasto</button>
+      <button class="btn fantasma" onclick="nuevoMov('ingreso')">+ Ingreso</button>
+    </div>
+
+    <!-- ===== NUEVA SECCIÓN: TARJETAS Y DEUDAS ===== -->
+    <div class="titulo"><h2>Tarjetas y Deudas</h2><button class="btn chico fantasma" onclick="nuevaDeuda()">+ Añadir</button></div>
+    <div id="resumenDeudas"></div>
+    <div id="listaDeudas"></div>
+
+    <div id="sugerencias"></div>
+
+    <div class="titulo"><h2>Plan de pagos</h2><button class="btn chico fantasma" onclick="nuevoPago()">+ Pago fijo</button></div>
+    <div id="listaPagos"></div>
+    <button class="btn fantasma" style="margin:4px 0 6px" onclick="exportarICS()">Enviar recordatorios a mi calendario</button>
+    <div class="mini">Descarga un archivo .ics: lo abres y iOS crea los eventos con alarma el día antes de cada pago.</div>
+
+    <div class="titulo"><h2>Movimientos</h2><em id="conteoMov"></em></div>
+    <div class="card" id="listaMov"></div>
+  </section>
+
+  <!-- ============ AJUSTES ============ -->
+  <section class="vista" id="v-ajustes">
+    <div class="titulo"><h2>Tu bitácora</h2></div>
+    <div class="card">
+      <label class="campo"><span>Cómo te llamo</span><input id="inNombre" oninput="setNombre(this.value)"></label>
+      <label class="campo"><span>Moneda</span>
+        <select id="inMoneda" onchange="setMoneda(this.value)">
+          <option value="COP">Peso colombiano</option><option value="USD">Dólar</option>
+          <option value="EUR">Euro</option><option value="MXN">Peso mexicano</option>
+        </select></label>
+    </div>
+
+    <div class="titulo"><h2>Cómo la instalas en el iPhone</h2></div>
+    <div class="card receta-pasos">
+      1. Abre este archivo en Safari.<br>
+      2. Toca Compartir (el cuadrito con la flecha).<br>
+      3. Elige “Añadir a pantalla de inicio”.<br>
+      4. Ábrela desde el ícono: se ve sin barras, como app.<br>
+      <span class="mini" style="display:block;margin-top:8px">Todo se guarda dentro de tu iPhone. Nada sale a internet, nada se sube a ningún servidor.</span>
+    </div>
+
+    <div class="titulo"><h2>Copia de seguridad</h2></div>
+    <div class="grid2">
+      <button class="btn fantasma" onclick="exportar()">Descargar respaldo</button>
+      <button class="btn fantasma" onclick="document.getElementById('fileImp').click()">Restaurar</button>
+    </div>
+    <input type="file" id="fileImp" accept=".json" style="display:none" onchange="importar(this)">
+    <div class="mini" style="margin-top:8px">Hazlo una vez al mes. Si borras Safari o cambias de teléfono, el respaldo es lo único que trae tu historia de vuelta.</div>
+
+    <hr>
+    <button class="btn peligro" onclick="borrarTodo()">Borrar todos mis datos</button>
+    <div style="height:30px"></div>
+  </section>
+</div>
+
+<nav><div class="in">
+  <button class="on" data-v="hoy" onclick="ir('hoy')"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Hoy</span></button>
+  <button data-v="entreno" onclick="ir('entreno')"><svg viewBox="0 0 24 24"><path d="M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12"/></svg><span>Entreno</span></button>
+  <button data-v="comida" onclick="ir('comida')"><svg viewBox="0 0 24 24"><path d="M6 3v8a2 2 0 004 0V3M8 11v10M17 3c-1.5 2-2 4-2 7h4c0-3-.5-5-2-7zM17 10v11"/></svg><span>Comida</span></button>
+  <button data-v="plata" onclick="ir('plata')"><svg viewBox="0 0 24 24"><path d="M12 3v18M16 7H10a2.5 2.5 0 000 5h4a2.5 2.5 0 010 5H8"/></svg><span>Plata</span></button>
+  <button data-v="ajustes" onclick="ir('ajustes')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg><span>Ajustes</span></button>
+</div></nav>
+
+<div class="velo" id="velo" onclick="if(event.target===this)cerrar()">
+  <div class="hoja" id="hoja"><div class="asa"></div><div id="hojaCont"></div></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   BITÁCORA — app personal, 100% local
+   ============================================================ */
+const LLAVE='bitacora_rafa_v1';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9);
+const hoy=new Date();
+const iso=d=>{const x=new Date(d);x.setMinutes(x.getMinutes()-x.getTimezoneOffset());return x.toISOString().slice(0,10)};
+const HOY=iso(hoy);
+const mesDe=f=>f.slice(0,7);
+const sumaDias=(f,n)=>{const d=new Date(f+'T12:00');d.setDate(d.getDate()+n);return iso(d)};
+const DIAS=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+/* ---------- datos base ---------- */
+const RUTINAS=[
+ {id:'calistenia',nombre:'Calistenia militar',dia:1,tipo:'circuito',rondas:4,color:'var(--albaricoque)',
+  nota:'Circuito. Descanso 60–90 s entre rondas. Ejecución limpia antes que velocidad.',
+  ejercicios:[{n:'Dominadas',obj:'6–10'},{n:'Flexiones militares (manos cerradas)',obj:'15–20'},
+   {n:'Sentadilla con salto',obj:'20'},{n:'Burpees',obj:'12'},{n:'Escaladores',obj:'40 seg'},
+   {n:'Fondos en banca',obj:'15'},{n:'Plancha',obj:'60 seg'},{n:'Zancadas alternas',obj:'20'}]},
+ {id:'piernas',nombre:'Gimnasio · Piernas',dia:2,tipo:'pesas',color:'var(--menta)',
+  nota:'Sube peso solo cuando completes todas las repeticiones de todas las series.',
+  ejercicios:[{n:'Sentadilla libre',series:4,obj:'10'},{n:'Prensa',series:4,obj:'12'},
+   {n:'Peso muerto rumano',series:3,obj:'12'},{n:'Extensión de cuádriceps',series:3,obj:'15'},
+   {n:'Curl femoral',series:3,obj:'12'},{n:'Hip thrust',series:3,obj:'12'},{n:'Pantorrillas',series:4,obj:'20'}]},
+ {id:'bici',nombre:'Bici estática · Intervalos',dia:3,tipo:'bici',color:'var(--oro)',
+  nota:'Ajusta la resistencia, no la velocidad. En los fuertes deberías poder hablar entrecortado, no cantar.',
+  bloques:[{n:'Calentamiento suave',seg:300},{n:'Fuerte',seg:60},{n:'Suave',seg:120},{n:'Fuerte',seg:60},
+   {n:'Suave',seg:120},{n:'Fuerte',seg:60},{n:'Suave',seg:120},{n:'Fuerte',seg:60},{n:'Suave',seg:120},
+   {n:'Fuerte',seg:60},{n:'Suave',seg:120},{n:'Fuerte',seg:60},{n:'Enfriamiento',seg:300}]},
+ {id:'brazos',nombre:'Gimnasio · Brazos y espalda',dia:4,tipo:'pesas',color:'var(--rosa)',
+  nota:'Baja el peso contando 3 segundos. Ahí está la mitad del trabajo.',
+  ejercicios:[{n:'Press banca',series:4,obj:'10'},{n:'Remo con barra',series:4,obj:'10'},
+   {n:'Jalón al pecho',series:3,obj:'12'},{n:'Press militar',series:3,obj:'10'},
+   {n:'Curl bíceps',series:3,obj:'12'},{n:'Tríceps en polea',series:3,obj:'12'},
+   {n:'Elevaciones laterales',series:3,obj:'15'}]}
+];
+
+const RECETAS_BASE=[
+ {id:'r1',n:'Huevos revueltos con espinaca y aguacate',t:'desayuno',ing:['2 huevos','1 puñado de espinaca','1/2 aguacate','Aceite de oliva','Sal'],p:'Saltea la espinaca 1 minuto. Agrega los huevos batidos y mueve a fuego bajo hasta que queden cremosos. Sirve con el aguacate en tajadas.'},
+ {id:'r2',n:'Yogur griego con nueces y canela',t:'desayuno',ing:['Yogur griego sin azúcar','6 nueces','Canela','Semillas de chía'],p:'Mezcla todo. Deja reposar 5 minutos para que la chía se hidrate.'},
+ {id:'r4',n:'Ensalada tibia de pollo, pepino y aguacate',t:'almuerzo',ing:['Pechuga de pollo','1 pepino','1/2 aguacate','Lechuga','Limón','Aceite de oliva'],p:'Sella el pollo a la plancha y córtalo en tiras. Mezcla con el pepino en rodajas y la lechuga. Aliña con limón, aceite y sal.'},
+ {id:'r5',n:'Bowl de pollo con calabacín salteado',t:'almuerzo',ing:['Pechuga de pollo','2 calabacines','Ajo','Aceite de oliva','Orégano'],p:'Corta el calabacín en medias lunas y saltéalo con ajo 5 minutos. Suma el pollo en cubos ya sellado y el orégano.'},
+ {id:'r8',n:'Crema de calabacín con pollo desmenuzado',t:'cena',ing:['3 calabacines','1 taza de caldo de pollo','Pollo cocido','Cebolla'],p:'Cocina el calabacín con cebolla en el caldo 15 minutos y licúa. Sirve con el pollo desmenuzado encima.'},
+ {id:'r10',n:'Pescado blanco al vapor con zucchini',t:'cena',ing:['Filete de pescado blanco','1 zucchini','Limón','Sal','Aceite de oliva'],p:'Vapor 10 minutos con el zucchini en láminas debajo del pescado. Limón y aceite al servir.'},
+ {id:'r13',n:'Queso, aceitunas y almendras',t:'snack',ing:['Queso campesino','Aceitunas','Almendras'],p:'Sin cocción. Porción de la mano cerrada.'}
+];
+
+const BASE={
+ perfil:{nombre:'Rafa',moneda:'COP'},
+ entreno:{logs:{}},
+ comida:{recetas:RECETAS_BASE,plan:{}},
+ plata:{mov:[],pagos:[],aprendido:{},ignoradas:[],deudas:[]},
+ dia:{dias:{}}
+};
+
+/* ---------- estado ---------- */
+let S=cargar();
+function cargar(){
+  try{const c=localStorage.getItem(LLAVE);
+    if(!c)return JSON.parse(JSON.stringify(BASE));
+    const d=JSON.parse(c);
+    return Object.assign(JSON.parse(JSON.stringify(BASE)),d);
+  }catch(e){return JSON.parse(JSON.stringify(BASE))}
+}
+function guardar(){try{localStorage.setItem(LLAVE,JSON.stringify(S))}catch(e){aviso('No pude guardar: memoria llena')}}
+function aviso(t){const el=$('toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),1900)}
+
+const dinero=n=>{
+  const m=S.perfil.moneda||'COP';
+  try{return new Intl.NumberFormat('es-CO',{style:'currency',currency:m,maximumFractionDigits:0}).format(n||0)}
+  catch(e){return '$'+Math.round(n||0).toLocaleString('es-CO')}
+};
+
+/* ---------- navegación ---------- */
+let vista='hoy';
+function ir(v){
+  vista=v;
+  document.querySelectorAll('.vista').forEach(s=>s.classList.remove('on'));
+  $('v-'+v).classList.add('on');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  window.scrollTo({top:0,behavior:'instant'});
+  pintar();
+}
+function abrir(html){$('hojaCont').innerHTML=html;$('velo').classList.add('on')}
+function cerrar(){$('velo').classList.remove('on')}
+
+/* ============================================================
+   HOY
+   ============================================================ */
+function diaDe(f){
+  if(!S.dia.dias[f])S.dia.dias[f]={tareas:[],citas:[],correos:[]};
+  const d=S.dia.dias[f];
+  d.tareas=d.tareas||[];d.citas=d.citas||[];d.correos=d.correos||[];
+  return d;
+}
+function procesarDump(){
+  const txt=$('dump').value.trim();
+  if(!txt)return aviso('Escribe algo primero');
+  const d=diaDe(HOY);let n=0;
+  txt.split(/\n+/).forEach(linea=>{
+    const l=linea.replace(/^[-•*\s]+/,'').trim();
+    if(!l)return;n++;
+    const hora=detectarHora(l);
+    const esCorreo=/(correo|mail|email|escribir a|responder a|responderle|contestar|enviar a)/i.test(l)||/@/.test(l);
+    const esCita=hora||/(cita|reuni[oó]n|llamada|junta|entrega|almuerzo con|zoom|meet|consulta)/i.test(l);
+    if(esCorreo)d.correos.push({id:uid(),txt:l,ok:false});
+    else if(esCita)d.citas.push({id:uid(),txt:l,hora:hora||'',ok:false});
+    else d.tareas.push({id:uid(),txt:l,ok:false});
+  });
+  d.citas.sort((a,b)=>(a.hora||'zz').localeCompare(b.hora||'zz'));
+  $('dump').value='';guardar();pintar();aviso(n+' líneas ordenadas');
+}
+function detectarHora(t){
+  const m=t.match(/(\b\d{1,2})(?:[:\.](\d{2}))?\s*(a\.?m\.?|p\.?m\.?|h|hrs)?\b/i);
+  if(!m)return '';
+  let h=parseInt(m[1],10);const min=m[2]?m[2]:'00';const suf=(m[3]||'').toLowerCase();
+  if(!suf&&!/[:\.]/.test(m[0])&&h>24)return '';
+  if(suf.startsWith('p')&&h<12)h+=12;
+  if(suf.startsWith('a')&&h===12)h=0;
+  if(h>23)return '';
+  if(!suf&&!m[2])return '';
+  return String(h).padStart(2,'0')+':'+min;
+}
+function limpiarDump(){$('dump').value=''}
+function agregarManual(tipo){
+  abrir(`<h3>Añadir a ${tipo}</h3>
+   <label class="campo"><span>Qué es</span><input id="mTxt" placeholder="Escríbelo tal cual"></label>
+   ${tipo==='citas'?'<label class="campo"><span>Hora</span><input id="mHora" type="time"></label>':''}
+   <button class="btn" onclick="guardarManual('${tipo}')">Guardar</button>`);
+  setTimeout(()=>$('mTxt').focus(),150);
+}
+function guardarManual(tipo){
+  const t=$('mTxt').value.trim();if(!t)return aviso('Falta el texto');
+  const d=diaDe(HOY);
+  const o={id:uid(),txt:t,ok:false};
+  if(tipo==='citas'){o.hora=$('mHora').value||'';d.citas.push(o);d.citas.sort((a,b)=>(a.hora||'zz').localeCompare(b.hora||'zz'))}
+  else d[tipo].push(o);
+  guardar();cerrar();pintar();
+}
+function toggleItem(tipo,id){
+  const d=diaDe(HOY);const it=d[tipo].find(x=>x.id===id);if(it){it.ok=!it.ok;guardar();pintar()}
+}
+function borrarItem(tipo,id){
+  const d=diaDe(HOY);d[tipo]=d[tipo].filter(x=>x.id!==id);S.dia.dias[HOY]=d;guardar();pintar();
+}
+function traerPendientes(){
+  const ay=diaDe(sumaDias(HOY,-1));const d=diaDe(HOY);let n=0;
+  ['tareas','correos'].forEach(k=>{
+    ay[k].filter(x=>!x.ok).forEach(x=>{d[k].push({id:uid(),txt:x.txt,ok:false});x.ok=true;n++});
+  });
+  guardar();pintar();aviso(n+' pendientes de ayer, hoy');
+}
+function pintaHoy(){
+  const d=diaDe(HOY);
+  const filas=(tipo,arr,extra)=>arr.length?arr.map(x=>`
+    <div class="item ${x.ok?'listo':''}">
+      <button class="tick ${x.ok?'on':''}" onclick="toggleItem('${tipo}','${x.id}')">✓</button>
+      <div class="crece txt">${x.hora?`<b style="color:var(--albaricoque);font-variant-numeric:tabular-nums">${x.hora}</b> · `:''}${esc(x.txt)}</div>
+      <button class="borrar" onclick="borrarItem('${tipo}','${x.id}')">×</button>
+    </div>`).join(''):`<div class="mini" style="padding:6px 0">${extra}</div>`;
+
+  $('listaCitas').innerHTML=filas('citas',d.citas,'Nada agendado. Día libre de reuniones.');
+  $('listaCorreos').innerHTML=filas('correos',d.correos,'Bandeja limpia por ahora.');
+  $('listaTareas').innerHTML=filas('tareas',d.tareas,'Sin tareas. Escribe arriba para empezar.');
+
+  const tot=d.tareas.length+d.correos.length+d.citas.length;
+  const hechos=[...d.tareas,...d.correos,...d.citas].filter(x=>x.ok).length;
+  $('hoyResumen').textContent=tot?`${hechos} de ${tot}`:'';
+
+  const ay=diaDe(sumaDias(HOY,-1));
+  const pend=[...ay.tareas,...ay.correos].filter(x=>!x.ok).length;
+  $('pendientesAyer').innerHTML=pend?`<div class="card" style="border-color:var(--oro)">
+     <div class="fila"><div class="crece"><b>${pend} cosas quedaron abiertas ayer</b>
+     <div class="mini">Puedes traerlas a hoy o dejarlas ir.</div></div>
+     <button class="btn chico" onclick="traerPendientes()">Traer</button></div></div>`:'';
+
+  const r=rutinaDe(HOY);
+  const lg=r?logsDia(HOY)[r.id]:null;
+  const pl=S.comida.plan[HOY]||{};
+  const semana=pagosProximos(7);
+  let h='';
+  h+=`<div class="item"><div class="crece"><div class="mini">Entreno</div>
+      ${r?`<b>${esc(r.nombre)}</b> ${lg&&lg.terminado?'<span style="color:var(--menta)">· hecho</span>':''}`:'<b>Descanso</b>'}</div>
+      ${r?`<button class="btn chico" onclick="ir('entreno')">Ver</button>`:''}</div>`;
+  const comidasHoy=['desayuno','almuerzo','cena'].filter(k=>pl[k]).length;
+  h+=`<div class="item"><div class="crece"><div class="mini">Comida</div><b>${comidasHoy} de 3 planeadas</b></div>
+      <button class="btn chico" onclick="ir('comida')">Ver</button></div>`;
+  h+=`<div class="item"><div class="crece"><div class="mini">Pagos en 7 días</div>
+      <b>${semana.length?semana.length+' por pagar · '+dinero(semana.reduce((a,b)=>a+b.monto,0)):'Nada urgente'}</b></div>
+      <button class="btn chico" onclick="ir('plata')">Ver</button></div>`;
+  $('proximo').innerHTML=h;
+}
+
+/* ============================================================
+   ENTRENO
+   ============================================================ */
+let rutinaSel=null;
+function rutinaDe(f){const dw=new Date(f+'T12:00').getDay();return RUTINAS.find(r=>r.dia===dw)||null}
+function logDe(f,rid){
+  if(!S.entreno.logs[f])S.entreno.logs[f]={};
+  const v=S.entreno.logs[f];
+  if(v.rutinaId){S.entreno.logs[f]={[v.rutinaId]:{marcas:v.marcas||{},terminado:!!v.terminado,notas:v.notas||''}}}
+  if(!S.entreno.logs[f][rid])S.entreno.logs[f][rid]={marcas:{},terminado:false,notas:''};
+  return S.entreno.logs[f][rid];
+}
+function logsDia(f){const o=S.entreno.logs[f]||{};return o.rutinaId?{[o.rutinaId]:o}:o}
+function ultimaVez(rid,nombre){
+  const fechas=Object.keys(S.entreno.logs).filter(f=>f<HOY&&logsDia(f)[rid]).sort().reverse();
+  for(const f of fechas){
+    const m=logsDia(f)[rid].marcas[nombre];
+    if(m&&m.some(s=>s.peso||s.reps)){
+      const buenas=m.filter(s=>s.peso||s.reps).map(s=>`${s.peso?s.peso+'kg':''}${s.peso&&s.reps?' × ':''}${s.reps||''}`);
+      return {f,txt:buenas.join('  ·  ')};
+    }
+  }
+  return null;
+}
+function pintaEntreno(){
+  const rHoy=rutinaDe(HOY);
+  if(!rutinaSel)rutinaSel=rHoy?rHoy.id:'calistenia';
+  $('chipsRutinas').innerHTML=RUTINAS.map(r=>{
+    const esHoy=rHoy&&rHoy.id===r.id;
+    return `<button class="chip ${rutinaSel===r.id?'on':''}" onclick="rutinaSel='${r.id}';pintar()">
+      ${DIAS[r.dia].slice(0,3)} · ${esc(r.nombre.split('·').pop().trim())}${esHoy?' •':''}</button>`;
+  }).join('');
+
+  const est=Object.keys(S.entreno.logs).filter(f=>f>=sumaDias(HOY,-28)&&
+    Object.values(logsDia(f)).some(l=>l.terminado)).length;
+  $('rachaTxt').textContent=est?est+' entrenos en 4 semanas':'sin registros aún';
+
+  const r=RUTINAS.find(x=>x.id===rutinaSel);
+  const esDeHoy=rHoy&&rHoy.id===r.id;
+  const lg=logDe(HOY,r.id);
+  let h=`<div class="card" style="border-left:3px solid ${r.color}">
+    <div class="fila"><div class="crece"><h3 style="margin:0;font-size:18px">${esc(r.nombre)}</h3>
+    <div class="mini">${DIAS[r.dia]}${esDeHoy?' · hoy':''}</div></div>
+    ${lg.terminado?'<span class="chip" style="color:var(--menta);border-color:var(--menta)">terminado</span>':''}</div>
+    <div class="mini" style="margin-top:8px;font-style:italic;font-size:14px">${esc(r.nota)}</div></div>`;
+
+  if(r.tipo==='bici'){
+    const total=r.bloques.reduce((a,b)=>a+b.seg,0);
+    h+=`<div class="card"><div class="fila"><div class="crece"><div class="mini">Sesión completa</div>
+      <div class="cifra">${Math.round(total/60)}<span style="font-size:14px;color:var(--humo)"> min</span></div></div>
+      <button class="btn chico" onclick="iniciarBici()">Empezar</button></div>
+      <div id="biciBloques" style="margin-top:12px">${r.bloques.map((b,i)=>
+        `<div class="item" id="bb${i}"><div class="crece"><b>${esc(b.n)}</b></div>
+         <div class="mini" style="font-variant-numeric:tabular-nums">${Math.round(b.seg/60*10)/10} min</div></div>`).join('')}</div></div>
+      <label class="campo"><span>Cómo te sentiste</span><input value="${esc(lg.notas||'')}" onchange="lg_nota(this.value)" placeholder="Resistencia, energía, lo que notaste"></label>`;
+  }else{
+    const lista=r.ejercicios;
+    h+=lista.map((e,ei)=>{
+      const nSer=r.tipo==='circuito'?r.rondas:e.series;
+      if(!lg.marcas[e.n])lg.marcas[e.n]=Array.from({length:nSer},()=>({peso:'',reps:'',ok:false}));
+      while(lg.marcas[e.n].length<nSer)lg.marcas[e.n].push({peso:'',reps:'',ok:false});
+      const uv=ultimaVez(r.id,e.n);
+      return `<div class="ej">
+        <div class="fila"><div class="crece"><h4>${esc(e.n)}</h4>
+          <div class="mini">${r.tipo==='circuito'?r.rondas+' rondas':e.series+' series'} · objetivo ${esc(e.obj)}</div>
+          ${uv?`<div class="hist">La vez pasada: ${esc(uv.txt)}</div>`:''}</div></div>
+        <div class="series">${lg.marcas[e.n].map((s,i)=>`
+          <div class="serie">
+            <div class="n">${i+1}</div>
+            <input inputmode="decimal" placeholder="${r.tipo==='circuito'?'—':'kg'}" value="${esc(s.peso)}" onchange="setSerie(${ei},${i},'peso',this.value)">
+            <input inputmode="numeric" placeholder="reps" value="${esc(s.reps)}" onchange="setSerie(${ei},${i},'reps',this.value)">
+            <button class="tick ${s.ok?'on':''}" onclick="setSerie(${ei},${i},'ok',null)">✓</button>
+          </div>`).join('')}</div></div>`;
+    }).join('');
+  }
+  h+=`<button class="btn" style="margin-top:6px" onclick="terminarEntreno()">${lg.terminado?'Reabrir sesión':'Terminar entrenamiento'}</button>
+      <div style="height:26px"></div>`;
+  $('entrenoCuerpo').innerHTML=h;
+}
+function setSerie(ei,i,campo,val){
+  const r=RUTINAS.find(x=>x.id===rutinaSel);const lg=logDe(HOY,r.id);
+  const ej=r.ejercicios[ei].n;
+  if(!lg.marcas[ej])return;
+  if(campo==='ok')lg.marcas[ej][i].ok=!lg.marcas[ej][i].ok;
+  else lg.marcas[ej][i][campo]=val;
+  guardar();
+  if(campo==='ok'){pintar();descanso(90)}
+}
+function lg_nota(v){const r=RUTINAS.find(x=>x.id===rutinaSel);const lg=logDe(HOY,r.id);lg.notas=v;guardar()}
+function terminarEntreno(){
+  const r=RUTINAS.find(x=>x.id===rutinaSel);const lg=logDe(HOY,r.id);
+  lg.terminado=!lg.terminado;guardar();pintar();
+  if(lg.terminado)aviso('Registrado. Ahí queda.');
+}
+let cronoInt=null;
+function descanso(seg){
+  quitarCrono();
+  const el=document.createElement('div');el.className='crono';el.id='crono';
+  el.innerHTML=`<div class="t" id="cronoT">${fmtT(seg)}</div><div class="crece mini">Descanso</div>
+    <button class="btn chico fantasma" onclick="quitarCrono()">Saltar</button>`;
+  $('entrenoCuerpo').prepend(el);
+  let r=seg;
+  cronoInt=setInterval(()=>{r--;const t=$('cronoT');if(!t)return quitarCrono();
+    t.textContent=fmtT(r);
+    if(r<=0){quitarCrono();aviso('Descanso listo');vibrar()}},1000);
+}
+function quitarCrono(){clearInterval(cronoInt);const c=$('crono');if(c)c.remove()}
+const fmtT=s=>Math.floor(Math.max(s,0)/60)+':'+String(Math.max(s,0)%60).padStart(2,'0');
+function vibrar(){if(navigator.vibrate)navigator.vibrate([200,80,200])}
+let biciInt=null;
+function iniciarBici(){
+  clearInterval(biciInt);
+  const r=RUTINAS.find(x=>x.id==='bici');let i=0,t=r.bloques[0].seg;
+  const marcar=()=>{r.bloques.forEach((b,k)=>{const el=$('bb'+k);if(el)el.style.opacity=k<i?.35:1;
+    if(el)el.style.borderLeft=k===i?'3px solid var(--oro)':'none';if(el)el.style.paddingLeft=k===i?'9px':'0'});
+    const el=$('bb'+i);if(el)el.querySelector('.mini').textContent=fmtT(t)};
+  marcar();
+  biciInt=setInterval(()=>{
+    t--;
+    if(t<=0){vibrar();i++;if(i>=r.bloques.length){clearInterval(biciInt);aviso('Sesión completa');return}t=r.bloques[i].seg}
+    marcar();
+  },1000);
+  aviso('En marcha. Deja la pantalla encendida.');
+}
+
+/* ============================================================
+   COMIDA
+   ============================================================ */
+let diaComida=HOY;
+function pintaComida(){
+  $('chipsDias').innerHTML=Array.from({length:7},(_,i)=>{
+    const f=sumaDias(HOY,i);const d=new Date(f+'T12:00');
+    return `<button class="chip ${diaComida===f?'on':''}" onclick="diaComida='${f}';pintar()">
+      ${DIAS[d.getDay()].slice(0,3)} ${d.getDate()}</button>`}).join('');
+  const d=new Date(diaComida+'T12:00');
+  $('comidaFecha').textContent=`${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}`;
+  const pl=S.comida.plan[diaComida]||{};
+  const slots=[['desayuno','Desayuno'],['almuerzo','Almuerzo'],['cena','Cena'],['snack','Snack']];
+  $('comidaCuerpo').innerHTML=slots.map(([k,lbl])=>{
+    const v=pl[k];const rec=v&&v.recetaId?S.comida.recetas.find(r=>r.id===v.recetaId):null;
+    return `<div class="card">
+      <div class="fila"><div class="crece"><div class="mini">${lbl}</div>
+        ${rec?`<b>${esc(rec.n)}</b>`:v&&v.txt?`<b>${esc(v.txt)}</b>`:'<span class="mini">Sin planear</span>'}
+        ${v&&v.comido?'<div class="mini" style="color:var(--menta)">Comido</div>':''}</div>
+        ${v?`<button class="btn chico ${v.comido?'fantasma':''}" onclick="marcarComido('${k}')">${v.comido?'✓':'Comí'}</button>`:''}
+        <button class="btn chico fantasma" onclick="elegirComida('${k}','${lbl}')">${v?'Cambiar':'Elegir'}</button>
+      </div>
+      ${rec?`<div class="receta-pasos" style="margin-top:9px;font-size:13.5px;color:var(--humo)">${esc(rec.ing.join(' · '))}</div>`:''}
+    </div>`}).join('');
+
+  $('listaRecetas').innerHTML=['desayuno','almuerzo','cena','snack'].map(t=>{
+    const rs=S.comida.recetas.filter(r=>r.t===t);if(!rs.length)return '';
+    return `<div class="titulo" style="margin:14px 0 6px"><h2 style="font-size:10.5px">${t}</h2></div>`+
+      rs.map(r=>`<div class="card" style="padding:11px 13px"><div class="fila">
+        <div class="crece truncar"><b style="font-weight:600">${esc(r.n)}</b></div>
+        <button class="btn chico fantasma" onclick="verReceta('${r.id}')">Ver</button></div></div>`).join('');
+  }).join('');
+}
+function elegirComida(slot,lbl){
+  const opts=S.comida.recetas.filter(r=>r.t===slot||slot==='snack');
+  abrir(`<h3>${lbl}</h3>
+   <div class="mini" style="margin-bottom:10px">Elige del recetario o escribe lo que vas a comer.</div>
+   ${opts.map(r=>`<div class="item"><div class="crece">${esc(r.n)}</div>
+     <button class="btn chico" onclick="setComida('${slot}','${r.id}',null)">Poner</button></div>`).join('')}
+   <hr><label class="campo"><span>Otra cosa</span><input id="cLibre" placeholder="Escríbelo"></label>
+   <button class="btn" onclick="setComida('${slot}',null,$('cLibre').value)">Guardar</button>`);
+}
+function setComida(slot,recetaId,txt){
+  if(!recetaId&&!(txt||'').trim())return aviso('Elige o escribe algo');
+  if(!S.comida.plan[diaComida])S.comida.plan[diaComida]={};
+  S.comida.plan[diaComida][slot]=recetaId?{recetaId,comido:false}:{txt:txt.trim(),comido:false};
+  guardar();cerrar();pintar();
+}
+function marcarComido(slot){
+  const v=S.comida.plan[diaComida][slot];v.comido=!v.comido;guardar();pintar();
+}
+function verReceta(id){
+  const r=S.comida.recetas.find(x=>x.id===id);
+  abrir(`<h3>${esc(r.n)}</h3>
+   <div class="mini" style="letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;font-weight:700">Necesitas</div>
+   <div class="receta-pasos">${r.ing.map(i=>'· '+esc(i)).join('<br>')}</div>
+   <div class="mini" style="letter-spacing:.14em;text-transform:uppercase;margin:14px 0 6px;font-weight:700">Cómo</div>
+   <div class="receta-pasos">${esc(r.p)}</div>
+   <hr><button class="btn fantasma" onclick="borrarReceta('${id}')">Quitar del recetario</button>`);
+}
+function borrarReceta(id){
+  S.comida.recetas=S.comida.recetas.filter(r=>r.id!==id);guardar();cerrar();pintar();aviso('Receta fuera');
+}
+function nuevaReceta(){
+  abrir(`<h3>Receta nueva</h3>
+   <label class="campo"><span>Nombre</span><input id="rN" placeholder="Cómo la llamas"></label>
+   <label class="campo"><span>Momento</span><select id="rT">
+     <option value="desayuno">Desayuno</option><option value="almuerzo">Almuerzo</option>
+     <option value="cena">Cena</option><option value="snack">Snack</option></select></label>
+   <label class="campo"><span>Ingredientes (uno por línea)</span><textarea id="rI" style="min-height:90px"></textarea></label>
+   <label class="campo"><span>Preparación</span><textarea id="rP" style="min-height:90px"></textarea></label>
+   <button class="btn" onclick="guardarReceta()">Guardar receta</button>`);
+}
+function guardarReceta(){
+  const n=$('rN').value.trim();if(!n)return aviso('Falta el nombre');
+  S.comida.recetas.push({id:uid(),n,t:$('rT').value,
+    ing:$('rI').value.split(/\n+/).map(s=>s.trim()).filter(Boolean),p:$('rP').value.trim()});
+  guardar();cerrar();pintar();aviso('Guardada');
+}
+function listaMercado(){
+  const conteo={};
+  for(let i=0;i<7;i++){
+    const f=sumaDias(HOY,i);const pl=S.comida.plan[f]||{};
+    Object.values(pl).forEach(v=>{
+      if(!v||!v.recetaId)return;
+      const r=S.comida.recetas.find(x=>x.id===v.recetaId);if(!r)return;
+      r.ing.forEach(i=>{conteo[i]=(conteo[i]||0)+1});
+    });
+  }
+  const ks=Object.keys(conteo);
+  abrir(`<h3>Lista de mercado</h3><div class="mini" style="margin-bottom:10px">De lo que planeaste para los próximos 7 días.</div>
+    ${ks.length?ks.sort().map(k=>`<div class="item"><div class="crece">${esc(k)}</div>
+      <div class="mini">${conteo[k]>1?'×'+conteo[k]:''}</div></div>`).join('')
+      :'<div class="vacio">Todavía no has planeado comidas del recetario esta semana.</div>'}
+    ${ks.length?'<button class="btn" style="margin-top:12px" onclick="copiarTexto(MERCADO)">Copiar lista</button>':''}`);
+  MERCADO=ks.sort().map(k=>'- '+k).join('\n');
+}
+let MERCADO='';
+function copiarTexto(t){
+  if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>aviso('Copiada'),()=>aviso('No pude copiar'));
+  else aviso('Copia manual');
+}
+
+/* ============================================================
+   PLATA  (con aprendizaje local y DEUDAS)
+   ============================================================ */
+let mesVer=mesDe(HOY);
+const CATS=['Casa','Mercado','Universidad','Seguro Mamá','Deuda Tarjetas','Domestika','Portal Cultural','Transporte','Salud','Ocio','Servicios'];
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,'').trim();
+
+function aprender(desc,cat,monto){
+  const k=norm(desc);if(!k)return;
+  const a=S.plata.aprendido[k]||{cats:{},montos:[],meses:[]};
+  a.cats[cat]=(a.cats[cat]||0)+1;
+  a.montos.push(monto);if(a.montos.length>8)a.montos.shift();
+  const m=mesDe(HOY);if(!a.meses.includes(m))a.meses.push(m);
+  S.plata.aprendido[k]=a;
+}
+function catSugerida(desc){
+  const k=norm(desc);const a=S.plata.aprendido[k];
+  if(a)return Object.entries(a.cats).sort((x,y)=>y[1]-x[1])[0][0];
+  const parcial=Object.keys(S.plata.aprendido).find(x=>k&&(x.includes(k)||k.includes(x)));
+  if(parcial)return Object.entries(S.plata.aprendido[parcial].cats).sort((x,y)=>y[1]-x[1])[0][0];
+  return '';
+}
+function montoSugerido(desc){
+  const a=S.plata.aprendido[norm(desc)];
+  if(!a||!a.montos.length)return '';
+  return Math.round(a.montos.reduce((x,y)=>x+y,0)/a.montos.length);
+}
+function detectarRecurrentes(){
+  const out=[];
+  Object.entries(S.plata.aprendido).forEach(([k,a])=>{
+    if(a.meses.length<2)return;
+    if(S.plata.ignoradas.includes(k))return;
+    if(S.plata.pagos.some(p=>norm(p.nombre)===k))return;
+    const prom=Math.round(a.montos.reduce((x,y)=>x+y,0)/a.montos.length);
+    const ultimo=S.plata.mov.filter(m=>norm(m.desc)===k).sort((x,y)=>y.fecha.localeCompare(x.fecha))[0];
+    out.push({k,nombre:ultimo?ultimo.desc:k,monto:prom,dia:ultimo?parseInt(ultimo.fecha.slice(8),10):1,
+      cat:Object.entries(a.cats).sort((x,y)=>y[1]-x[1])[0][0],veces:a.meses.length});
+  });
+  return out;
+}
+function pagosProximos(dias){
+  const out=[];const m=mesDe(HOY);const hoyD=parseInt(HOY.slice(8),10);
+  S.plata.pagos.forEach(p=>{
+    if(p.estado&&p.estado[m])return;
+    let diff=p.dia-hoyD;
+    if(diff<0)diff=-1; // vencido
+    if(diff<=dias)out.push({...p,diff});
+  });
+  return out.sort((a,b)=>a.diff-b.diff);
+}
+function pintaPlata(){
+  if(!S.plata.deudas) S.plata.deudas = [];
+
+  const [y,mo]=mesVer.split('-');
+  $('plataMes').textContent=MESES[parseInt(mo,10)-1]+' '+y;
+  $('plataNav').innerHTML=`<button class="btn chico fantasma" onclick="cambiarMes(-1)">‹</button>
+    <button class="btn chico fantasma" onclick="cambiarMes(1)" style="margin-left:6px">›</button>`;
+  const movs=S.plata.mov.filter(m=>mesDe(m.fecha)===mesVer).sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  const inn=movs.filter(m=>m.tipo==='ingreso').reduce((a,b)=>a+b.monto,0);
+  const out=movs.filter(m=>m.tipo==='gasto').reduce((a,b)=>a+b.monto,0);
+  $('kIn').textContent=dinero(inn);$('kOut').textContent=dinero(out);
+  const bal=inn-out;$('kBal').textContent=dinero(bal);
+  $('kBal').style.color=bal>=0?'var(--marfil)':'var(--rosa)';
+
+  // ===== SECCIÓN DEUDAS =====
+  const deudas = S.plata.deudas;
+  const totalDeuda = deudas.reduce((a, b) => a + b.total, 0);
+  const totalPagado = deudas.reduce((a, b) => a + b.pagado, 0);
+  const pctDeuda = totalDeuda > 0 ? Math.round((totalPagado / totalDeuda) * 100) : 0;
+
+  let frases = [
+    "¡Un paso a la vez! El esfuerzo de hoy es tu tranquilidad de mañana.",
+    "Cada cuota menos es un respiro más.",
+    "¡Excelente ritmo!",
+    "Mantén el enfoque. La libertad financiera se construye día a día."
+  ];
+  let fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+
+  if(deudas.length > 0) {
+    let mensaje = pctDeuda >= 100 
+      ? "¡Felicidades Rafa, lo lograste! Eres increíble." 
+      : `${fraseAleatoria} Cada avance te acerca a la meta de quedar libre de tarjetas en diciembre.`;
+
+    $('resumenDeudas').innerHTML = `<div class="card" style="border-color:var(--menta); background:rgba(127, 216, 176, 0.08);">
+      <div style="font-family:var(--sans); font-weight:800; color:var(--menta); font-size:16px; margin-bottom:6px;">¡Vamos Rafa! Has pagado ${dinero(totalPagado)}.</div>
+      <div class="mini" style="color:var(--marfil); font-weight:600; line-height: 1.5;">"${mensaje}"</div>
+      <div class="barra-bg"><div class="barra-in" style="width:${pctDeuda}%"></div></div>
+    </div>`;
+  } else {
+    $('resumenDeudas').innerHTML = '';
+  }
+
+  $('listaDeudas').innerHTML = deudas.length ? deudas.map(d => {
+    const p = d.total > 0 ? (d.pagado / d.total) * 100 : 0;
+    const pagadoCompleto = d.pagado >= d.total;
+    return `<div class="card" style="${pagadoCompleto ? 'opacity:0.7; border-color:var(--menta);' : ''}">
+      <div class="fila">
+        <div class="crece"><b style="${pagadoCompleto ? 'text-decoration:line-through; color:var(--humo)' : ''}">${esc(d.nombre)}</b>
+          <div class="mini">${d.cuotasPagadas} de ${d.cuotas} cuotas pagadas</div>
+        </div>
+        <div style="text-align:right">
+          <b style="font-variant-numeric:tabular-nums; color:${pagadoCompleto ? 'var(--menta)' : 'var(--rosa)'}">${dinero(d.total - d.pagado)}</b>
+          <div class="mini">restante de ${dinero(d.total)}</div>
+        </div>
+      </div>
+      <div class="barra-bg" style="margin-bottom:12px"><div class="barra-in" style="width:${p}%; background:${pagadoCompleto ? 'var(--menta)' : 'var(--albaricoque)'}"></div></div>
+      <div class="grid2">
+        <button class="btn chico fantasma" style="color:var(--rosa); border-color:var(--linea)" onclick="borrarDeuda('${d.id}')">Eliminar</button>
+        <button class="btn chico" onclick="pagarCuota('${d.id}')" ${pagadoCompleto ? 'disabled' : ''}>Abonar Cuota</button>
+      </div>
+    </div>`;
+  }).join('') : '<div class="vacio">No tienes deudas de tarjetas registradas. ¡Genial!</div>';
+
+  // ===== SUGERENCIAS =====
+  SUG=detectarRecurrentes();
+  $('sugerencias').innerHTML=SUG.length?SUG.slice(0,3).map((r,si)=>`
+    <div class="card" style="border-color:var(--oro);margin-top:10px">
+      <div class="mini">Lo vengo viendo</div>
+      <b>${esc(r.nombre)}</b> aparece en ${r.veces} meses, cerca de ${dinero(r.monto)}.
+      <div class="grid2" style="margin-top:9px">
+        <button class="btn chico fantasma" onclick="ignorarSug('${r.k}')">No, gracias</button>
+        <button class="btn chico" onclick="crearDesdeSug(${si})">Volverlo pago fijo</button>
+      </div></div>`).join(''):'';
+
+  const m=mesVer;
+  $('listaPagos').innerHTML=S.plata.pagos.length?S.plata.pagos.slice().sort((a,b)=>a.dia-b.dia).map(p=>{
+    const pagado=p.estado&&p.estado[m];
+    const hoyD=parseInt(HOY.slice(8),10);
+    const vencido=!pagado&&mesVer===mesDe(HOY)&&p.dia<hoyD;
+    const cerca=!pagado&&mesVer===mesDe(HOY)&&p.dia-hoyD>=0&&p.dia-hoyD<=3;
+    const color=pagado?'var(--menta)':vencido?'var(--rosa)':cerca?'var(--oro)':'var(--linea)';
+    return `<div class="card" style="border-left:3px solid ${color}">
+      <div class="fila">
+        <button class="tick ${pagado?'on':''}" onclick="togglePago('${p.id}')">✓</button>
+        <div class="crece"><b>${esc(p.nombre)}</b>
+          <div class="mini">Día ${p.dia} · ${esc(p.cat)}${vencido?' · <span style="color:var(--rosa)">vencido</span>':cerca?' · <span style="color:var(--oro)">esta semana</span>':''}</div></div>
+        <div style="text-align:right"><b style="font-variant-numeric:tabular-nums">${dinero(p.monto)}</b></div>
+        <button class="borrar" onclick="borrarPago('${p.id}')">×</button>
+      </div></div>`}).join(''):'<div class="vacio">Sin pagos fijos todavía. Añade el arriendo, servicios, colegio, suscripciones.</div>';
+
+  $('conteoMov').textContent=movs.length?movs.length+' en el mes':'';
+  $('listaMov').innerHTML=movs.length?movs.slice(0,60).map(mv=>`
+    <div class="item">
+      <div class="crece"><b style="font-weight:600">${esc(mv.desc)}</b>
+        <div class="mini">${mv.fecha.slice(8)}/${mv.fecha.slice(5,7)} · ${esc(mv.cat)}</div></div>
+      <b style="color:${mv.tipo==='ingreso'?'var(--menta)':'var(--rosa)'};font-variant-numeric:tabular-nums">
+        ${mv.tipo==='ingreso'?'+':'−'}${dinero(mv.monto)}</b>
+      <button class="borrar" onclick="borrarMov('${mv.id}')">×</button>
+    </div>`).join(''):'<div class="mini" style="padding:6px 0">Nada registrado este mes.</div>';
+}
+
+function nuevaDeuda() {
+  abrir(`<h3>Añadir Deuda de Tarjeta</h3>
+   <label class="campo"><span>Nombre de la deuda</span><input id="dNom" placeholder="Ej. Visa, Computador..."></label>
+   <label class="campo"><span>Deuda Total (lo que debes)</span><input id="dTot" inputmode="decimal" placeholder="0"></label>
+   <label class="campo"><span>Número de Cuotas</span><input id="dCuo" type="number" inputmode="numeric" placeholder="12"></label>
+   <button class="btn" onclick="guardarDeuda()">Guardar Deuda</button>`);
+}
+
+function guardarDeuda() {
+  const nombre = $('dNom').value.trim();
+  const total = parseFloat(String($('dTot').value).replace(/[^\d.-]/g,''));
+  const cuotas = parseInt($('dCuo').value, 10);
+  if(!nombre) return aviso('Falta el nombre');
+  if(!total || total <= 0) return aviso('Falta el total de la deuda');
+  if(!cuotas || cuotas <= 0) return aviso('Faltan las cuotas');
+
+  if(!S.plata.deudas) S.plata.deudas = [];
+  S.plata.deudas.push({id:uid(), nombre, total, cuotas, pagado:0, cuotasPagadas:0});
+  guardar(); cerrar(); pintar(); aviso('Deuda añadida exitosamente');
+}
+
+function pagarCuota(id) {
+  const d = S.plata.deudas.find(x => x.id === id);
+  if(!d) return;
+  const valorCuota = (d.total / d.cuotas).toFixed(2);
+
+  abrir(`<h3>Abonar a ${esc(d.nombre)}</h3>
+   <div class="mini" style="margin-bottom:12px">Se registrará automáticamente como un gasto en tus movimientos de este mes.</div>
+   <label class="campo"><span>Monto a abonar</span><input id="pAbo" inputmode="decimal" value="${valorCuota}"></label>
+   <button class="btn" onclick="confirmarAbono('${id}')">Registrar Pago</button>`);
+}
+
+function confirmarAbono(id) {
+  const d = S.plata.deudas.find(x => x.id === id);
+  const monto = parseFloat(String($('pAbo').value).replace(/[^\d.-]/g,''));
+  if(!monto || monto <= 0) return aviso('Monto inválido');
+
+  d.pagado += monto;
+  d.cuotasPagadas += 1;
+  if(d.pagado > d.total) d.pagado = d.total; 
+
+  // Registrar automáticamente en los movimientos
+  S.plata.mov.push({id:uid(), tipo:'gasto', desc:'Cuota tarjeta: ' + d.nombre, monto, cat:'Deuda Tarjetas', fecha:HOY});
+  aprender('Cuota tarjeta: ' + d.nombre, 'Deuda Tarjetas', monto);
+
+  guardar(); cerrar(); pintar();
+  aviso('¡Excelente! Cuota abonada 🎉');
+}
+
+function borrarDeuda(id) {
+  S.plata.deudas = S.plata.deudas.filter(x => x.id !== id);
+  guardar(); pintar(); aviso('Deuda eliminada');
+}
+
+function cambiarMes(n){
+  const [y,m]=mesVer.split('-').map(Number);const d=new Date(y,m-1+n,1);
+  mesVer=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');pintar();
+}
+function nuevoMov(tipo){
+  abrir(`<h3>${tipo==='gasto'?'Registrar gasto':'Registrar ingreso'}</h3>
+   <label class="campo"><span>Qué fue</span><input id="mvD" placeholder="Arriendo, mercado, cliente Brújula…" oninput="autoCompletar()"></label>
+   <label class="campo"><span>Cuánto</span><input id="mvM" inputmode="decimal" placeholder="0"></label>
+   <label class="campo"><span>Categoría</span><select id="mvC">${CATS.map(c=>`<option>${c}</option>`).join('')}</select></label>
+   <label class="campo"><span>Fecha</span><input id="mvF" type="date" value="${HOY}"></label>
+   <div id="mvHint" class="mini" style="margin-bottom:10px"></div>
+   <button class="btn" onclick="guardarMov('${tipo}')">Guardar</button>`);
+  setTimeout(()=>$('mvD').focus(),150);
+}
+function autoCompletar(){
+  const d=$('mvD').value;const c=catSugerida(d);const m=montoSugerido(d);
+  if(c){$('mvC').value=c}
+  $('mvHint').innerHTML=(c||m)?`Según lo que has registrado antes: ${c?'categoría '+c:''}${c&&m?' · ':''}${m?'suele ser '+dinero(m):''}
+    ${m?`<button class="btn chico fantasma" style="margin-left:6px" onclick="$('mvM').value=${m}">Usar</button>`:''}`:'';
+}
+function guardarMov(tipo){
+  const desc=$('mvD').value.trim();const monto=parseFloat(String($('mvM').value).replace(/[^\d.-]/g,''));
+  if(!desc)return aviso('Falta la descripción');
+  if(!monto||monto<=0)return aviso('Falta el monto');
+  const cat=$('mvC').value;const fecha=$('mvF').value||HOY;
+  S.plata.mov.push({id:uid(),tipo,desc,monto,cat,fecha});
+  if(tipo==='gasto')aprender(desc,cat,monto);
+  guardar();cerrar();pintar();aviso('Anotado');
+}
+function borrarMov(id){S.plata.mov=S.plata.mov.filter(m=>m.id!==id);guardar();pintar()}
+function nuevoPago(pre){
+  const p=pre||{};
+  abrir(`<h3>Pago fijo</h3>
+   <label class="campo"><span>Nombre</span><input id="pgN" value="${esc(p.nombre||'')}" placeholder="Arriendo, internet, colegio…"></label>
+   <label class="campo"><span>Monto</span><input id="pgM" inputmode="decimal" value="${p.monto||''}"></label>
+   <label class="campo"><span>Día del mes</span><input id="pgD" inputmode="numeric" value="${p.dia||5}"></label>
+   <label class="campo"><span>Categoría</span><select id="pgC">${CATS.map(c=>`<option ${p.cat===c?'selected':''}>${c}</option>`).join('')}</select></label>
+   <button class="btn" onclick="guardarPago()">Guardar pago</button>`);
+}
+function guardarPago(){
+  const nombre=$('pgN').value.trim();const monto=parseFloat(String($('pgM').value).replace(/[^\d.-]/g,''));
+  const dia=Math.min(28,Math.max(1,parseInt($('pgD').value,10)||1));
+  if(!nombre)return aviso('Falta el nombre');
+  if(!monto)return aviso('Falta el monto');
+  S.plata.pagos.push({id:uid(),nombre,monto,dia,cat:$('pgC').value,estado:{}});
+  guardar();cerrar();pintar();aviso('Pago agendado');
+}
+function togglePago(id){
+  const p=S.plata.pagos.find(x=>x.id===id);if(!p)return;
+  p.estado=p.estado||{};
+  if(p.estado[mesVer]){delete p.estado[mesVer]}
+  else{
+    p.estado[mesVer]=true;
+    const f=mesVer+'-'+String(p.dia).padStart(2,'0');
+    S.plata.mov.push({id:uid(),tipo:'gasto',desc:p.nombre,monto:p.monto,cat:p.cat,fecha:f});
+    aprender(p.nombre,p.cat,p.monto);
+    aviso('Pagado y registrado');
+  }
+  guardar();pintar();
+}
+function borrarPago(id){S.plata.pagos=S.plata.pagos.filter(p=>p.id!==id);guardar();pintar()}
+function ignorarSug(k){S.plata.ignoradas.push(k);guardar();pintar()}
+let SUG=[];
+function crearDesdeSug(i){nuevoPago(SUG[i])}
+function exportarICS(){
+  if(!S.plata.pagos.length)return aviso('Primero añade pagos fijos');
+  const p2=n=>String(n).padStart(2,'0');
+  let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Bitacora//ES\r\nCALSCALE:GREGORIAN\r\n';
+  const hoyDt=new Date();
+  S.plata.pagos.forEach(p=>{
+    const d=new Date(hoyDt.getFullYear(),hoyDt.getMonth(),p.dia,9,0,0);
+    if(d<hoyDt)d.setMonth(d.getMonth()+1);
+    const st=`${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}T090000`;
+    const en=`${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}T093000`;
+    ics+='BEGIN:VEVENT\r\n'+
+      `UID:${p.id}@bitacora\r\nDTSTAMP:${st}\r\nDTSTART:${st}\r\nDTEND:${en}\r\n`+
+      `RRULE:FREQ=MONTHLY;BYMONTHDAY=${p.dia}\r\n`+
+      `SUMMARY:Pagar ${p.nombre} — ${dinero(p.monto)}\r\n`+
+      `DESCRIPTION:Recordatorio de tu bitácora. Categoría: ${p.cat}\r\n`+
+      'BEGIN:VALARM\r\nTRIGGER:-P1D\r\nACTION:DISPLAY\r\nDESCRIPTION:Pago mañana\r\nEND:VALARM\r\n'+
+      'BEGIN:VALARM\r\nTRIGGER:-PT1H\r\nACTION:DISPLAY\r\nDESCRIPTION:Pago hoy\r\nEND:VALARM\r\n'+
+      'END:VEVENT\r\n';
+  });
+  ics+='END:VCALENDAR';
+  bajar('pagos.ics',ics,'text/calendar');
+  aviso('Ábrelo y añádelo a tu calendario');
+}
+
+/* ============================================================
+   ANILLO
+   ============================================================ */
+function progreso(){
+  const d=diaDe(HOY);
+  const r=rutinaDe(HOY);const lg=r?logsDia(HOY)[r.id]:null;
+  let pE;
+  if(!r)pE=1;
+  else if(lg&&lg.terminado)pE=1;
+  else if(lg&&Object.values(lg.marcas||{}).some(a=>a.some(s=>s.ok)))pE=.5;
+  else pE=0;
+  const pl=S.comida.plan[HOY]||{};
+  const claves=['desayuno','almuerzo','cena'];
+  const pC=claves.filter(k=>pl[k]&&pl[k].comido).length/3*.7+claves.filter(k=>pl[k]).length/3*.3;
+  const venc=pagosProximos(0).filter(p=>p.diff<0).length;
+  const movHoy=S.plata.mov.some(m=>m.fecha===HOY);
+  const pP=(venc?0:.5)+(movHoy?.5:0);
+  const items=[...d.tareas,...d.correos,...d.citas];
+  const pD=items.length?items.filter(x=>x.ok).length/items.length:0;
+  return [{k:'Entreno',v:pE,c:'var(--albaricoque)'},{k:'Comida',v:pC,c:'var(--menta)'},
+          {k:'Plata',v:pP,c:'var(--oro)'},{k:'Día',v:pD,c:'var(--rosa)'}];
+}
+function pintaAnillo(){
+  const segs=progreso();const R=52,C=2*Math.PI*R,arco=C*(82/360);
+  let svg='';
+  segs.forEach((s,i)=>{
+    const rot=-90+i*90+4;
+    svg+=`<circle cx="65" cy="65" r="${R}" stroke="var(--linea)" stroke-width="9" fill="none" stroke-linecap="round"
+      stroke-dasharray="${arco} ${C-arco}" transform="rotate(${rot} 65 65)"/>`;
+    const f=Math.max(0.001,arco*Math.min(1,s.v));
+    svg+=`<circle cx="65" cy="65" r="${R}" stroke="${s.c}" stroke-width="9" fill="none" stroke-linecap="round"
+      stroke-dasharray="${f} ${C-f}" transform="rotate(${rot} 65 65)" style="transition:stroke-dasharray .5s ease"/>`;
+  });
+  $('anilloSvg').innerHTML=svg;
+  const tot=Math.round(segs.reduce((a,b)=>a+Math.min(1,b.v),0)/4*100);
+  $('anilloPct').innerHTML=tot+'<span>%</span>';
+  $('leyenda').innerHTML=segs.map(s=>`<div><i class="punto" style="background:${s.c}"></i>
+    <b>${s.k}</b> ${Math.round(Math.min(1,s.v)*100)}%</div>`).join('');
+}
+
+/* ============================================================
+   AJUSTES / DATOS
+   ============================================================ */
+function setNombre(v){S.perfil.nombre=v||'Rafa';guardar();pintaCabecera()}
+function setMoneda(v){S.perfil.moneda=v;guardar();pintar()}
+function bajar(nombre,cont,tipo){
+  const b=new Blob([cont],{type:tipo});const u=URL.createObjectURL(b);
+  const a=document.createElement('a');a.href=u;a.download=nombre;document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},400);
+}
+function exportar(){bajar('bitacora-'+HOY+'.json',JSON.stringify(S),'application/json');aviso('Respaldo descargado')}
+function importar(inp){
+  const f=inp.files[0];if(!f)return;
+  const rd=new FileReader();
+  rd.onload=()=>{try{S=Object.assign(JSON.parse(JSON.stringify(BASE)),JSON.parse(rd.result));guardar();pintar();aviso('Datos restaurados')}
+    catch(e){aviso('Ese archivo no sirve')}};
+  rd.readAsText(f);inp.value='';
+}
+function borrarTodo(){
+  abrir(`<h3>Borrar todo</h3><div class="receta-pasos">Se va tu historial de entrenos, comidas, plata y días. No hay vuelta atrás.</div>
+   <div class="grid2" style="margin-top:14px">
+     <button class="btn fantasma" onclick="cerrar()">Mejor no</button>
+     <button class="btn peligro" onclick="confirmarBorrado()">Sí, borrar</button></div>`);
+}
+function confirmarBorrado(){localStorage.removeItem(LLAVE);S=JSON.parse(JSON.stringify(BASE));cerrar();pintar();aviso('Todo limpio')}
+
+/* ============================================================
+   PINTAR
+   ============================================================ */
+function pintaCabecera(){
+  const h=hoy.getHours();
+  const saludo=h<12?'Buenos días':h<19?'Buenas tardes':'Buenas noches';
+  $('saludo').innerHTML=`${saludo}, <b>${esc(S.perfil.nombre||'Rafa')}</b>`;
+  $('fechaLarga').textContent=`${DIAS[hoy.getDay()]} ${hoy.getDate()} de ${MESES[hoy.getMonth()]}`;
+}
+function pintar(){
+  pintaCabecera();pintaAnillo();
+  if(vista==='hoy')pintaHoy();
+  if(vista==='entreno')pintaEntreno();
+  if(vista==='comida')pintaComida();
+  if(vista==='plata')pintaPlata();
+  if(vista==='ajustes'){$('inNombre').value=S.perfil.nombre||'';$('inMoneda').value=S.perfil.moneda||'COP'}
+  guardar();
+}
+pintar();
+window.addEventListener('pageshow',()=>{if(iso(new Date())!==HOY)location.reload()});
+</script>
+</body>
+</html>
